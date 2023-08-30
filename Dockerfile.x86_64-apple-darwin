@@ -3,7 +3,7 @@ FROM rust:latest
 LABEL author=mengjun \
     version=0.0.1
 ENV UNATTENDED=1 \
-    OSX_VERSION_MIN=10.7
+    SDK_VERSION=13.3
 
 RUN apt-get update && apt-get install -y \
     clang \
