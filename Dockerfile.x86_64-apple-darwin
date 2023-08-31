@@ -8,12 +8,19 @@ LABEL author=mengjun \
 ENV UNATTENDED=1 \
     SDK_VERSION=13.3
 
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    clang \
+    cmake \
+    libssl-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install rustup target
 RUN rustup target add x86_64-apple-darwin
 
 # Install osxcross
 RUN git clone https://github.com/tpoechtrager/osxcross /opt/osxcross && \
-    /opt/osxcross/tools/get_dependencies.sh && \
     curl -L https://github.com/roblabla/MacOSX-SDKs/releases/download/13.3/MacOSX13.3.sdk.tar.xz | tar xJ -C /opt/osxcross/tarballs/ && \
     /opt/osxcross/build.sh && \
     export PATH=/opt/osxcross/target/bin:$PATH
